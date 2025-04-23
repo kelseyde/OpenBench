@@ -120,7 +120,6 @@ def run_benchmark(binary, network, private, threads, sets, expected=None):
         for bench, speed in multi_core_bench(binary, network, private, threads):
             benches.append(bench); speeds.append(speed)
 
-    print(benches)
     if len(set(benches)) != 1:
         raise utils.OpenBenchBadBenchException('[%s] Non-Deterministic Benches' % (engine))
 
