@@ -33,7 +33,7 @@ from OpenBench.workloads.modify_workload import modify_workload
 from OpenBench.workloads.verify_workload import verify_workload
 from OpenBench.workloads.view_workload import view_workload
 
-from OpenBench.config import OPENBENCH_CONFIG, OPENBENCH_STATIC_VERSION
+from OpenBench.config import OPENBENCH_CONFIG, OPENBENCH_CONFIG_CHECKSUM, OPENBENCH_STATIC_VERSION
 from OpenSite.settings import PROJECT_PATH
 
 from OpenBench.models import *
@@ -467,8 +467,12 @@ def workload(request, workload_type, pk, action=None):
     if action != None:
         return modify_workload(request, pk, action)
 
-    if not (workload := Test.objects.filter(id=pk).first()):
+    if not (workload := Test.objects.filter(id=int(pk)).first()):
         return redirect(request, '/index/', error='No such Workload exists')
+
+    # Trying to view a Tune as a Test, for example
+    if workload.workload_type_str() != workload_type:
+        return django.http.HttpResponseRedirect('/%s/%d/' % (workload.workload_type_str(), int(pk)))
 
     return view_workload(request, workload, workload_type.upper())
 
@@ -571,6 +575,10 @@ def verify_worker(function):
         if machine.secret != args[0].POST['secret']:
             return JsonResponse({ 'error' : 'Invalid Secret Token' })
 
+        # Prompt the worker to soft-restart if its config is out of date
+        if machine.info.get('OPENBENCH_CONFIG_CHECKSUM') != OPENBENCH_CONFIG_CHECKSUM:
+            return JsonResponse({ 'error' : 'Server Configuration Changed' })
+
         # Otherwise, carry on, and pass along the machine
         return function(*args, machine)
 
@@ -615,13 +623,16 @@ def client_worker_info(request):
     info    = json.loads(request.POST['system_info'])
     machine = OpenBench.utils.get_machine(info['machine_id'], user, info)
 
-    # Indicate invalid request
+    # Provided an invalid machine_id, but just create a new machine
     if not machine:
-        return JsonResponse({ 'error' : 'Bad Machine Id' })
+        machine = OpenBench.utils.get_machine('None', user, info)
 
     # Save the machine's latest information and Secret Token for this session
     machine.info   = info
     machine.secret = secrets.token_hex(32)
+
+    # Note the Config checksum at the time of init, in case it changes
+    machine.info['OPENBENCH_CONFIG_CHECKSUM'] = OPENBENCH_CONFIG_CHECKSUM
 
     # Tag engines that the Machine can build and/or run with binaries
     machine.info['supported'] = []
@@ -876,13 +887,30 @@ def api_build_info(request):
 @csrf_exempt
 def api_pgns(request, pgn_id):
 
+    # 0. Make sure the request has the correct permissions
     if not api_authenticate(request):
         return api_response({ 'error' : 'API requires authentication for this server' })
 
-    # Possible to request a PGN that does not exist
+    # 1. Make sure the workload actually exists for the requested PGN
+    try: workload = Test.objects.get(pk=pgn_id)
+    except: return api_response({ 'error' : 'Requested Workload Id does not exist' })
+
+    # 2. Make sure there actually is a PGN attached to the Workload
     pgn_path = FileSystemStorage('Media/PGNs').path('%d.pgn.tar' % (pgn_id))
     if not os.path.exists(pgn_path):
         return api_response({ 'error' : 'Unable to find PGN for Workload #%d' % (pgn_id) })
+
+    # 3. Make sure the workload is not currently running
+    if not workload.finished:
+        return api_response({ 'error' : 'PGNs cannot be downloaded while the Workload is active' })
+
+    # 4. Make sure no active workers are still on this workload
+    if OpenBench.utils.getRecentMachines().filter(workload=pgn_id):
+        return api_response({ 'error' : 'Some machines are still on this Workload. Try again shortly' })
+
+    # 5. Make sure there are no pending .pgn.bz2 files to be processed
+    if PGN.objects.filter(test_id=pgn_id).filter(processed=False):
+        return api_response({ 'error' : 'Still processing individual PGNs into the archive. Try again shortly' })
 
     # Craft the download HTML response
     fwrapper = FileWrapper(open(pgn_path, 'rb'), 8192)
