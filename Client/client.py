@@ -146,7 +146,7 @@ def download_client_files(args):
                 client_dir = os.path.join(temp_dir, 'OpenBench-%s' % (repo_ref), 'Client')
                 for root, dirs, files in os.walk(client_dir):
                     for file in files:
-                        if file != 'client.py':
+                        if file != 'client.py' and file != 'cutechess-ob':
                             shutil.copy2(os.path.join(root, file), os.path.join(os.getcwd(), file))
 
     except:
