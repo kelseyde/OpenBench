@@ -85,11 +85,6 @@
       "win_adj"       : "movecount=3 score=1410",
       "draw_adj"      : "movenumber=40 movecount=8 score=15",
       "workload_size" : 256
-    },
-
-    "16k Nodes" : {
-      "both_options"      : "Threads=1 Hash=1 NormalizeScore=false",
-      "both_time_control" : "N=16000"
     }
   }
 }
