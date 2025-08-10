@@ -51,7 +51,7 @@
     },
     "STC Simplification": {
       "both_options": "Threads=1 Hash=128",
-      "both_time_control": "80.0+0.08",
+      "both_time_control": "8.0+0.08",
       "workload_size": 32,
       "test_bounds": "[-1.75, 0.25]"
     },
