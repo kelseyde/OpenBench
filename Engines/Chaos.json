@@ -1,6 +1,6 @@
 {
   "private": false,
-  "nps": 500000,
+  "nps": 700000,
   "source": "https://github.com/Quinniboi10/Chaos",
   "build": {
     "path": "",
