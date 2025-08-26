@@ -36,6 +36,7 @@
         "Laminar",
         "Heimdall",
         "Artisan",
-        "Prelude"
+        "Prelude",
+        "ChessEngine"
     ]
 }
