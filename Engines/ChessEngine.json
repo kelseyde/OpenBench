@@ -57,7 +57,7 @@
       "both_time_control" : "40.0+0.4",
       "workload_size"     : 8,
       "test_bounds"       : "[-5.00, 0.00]"
-    },
+    }
   },
 
   "tune_presets" : {
