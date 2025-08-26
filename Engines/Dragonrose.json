@@ -1,6 +1,6 @@
 {
     "private" : false,
-    "nps"     : 550000,
+    "nps"     : 700000,
     "source"  : "https://github.com/TampliteSK/dragonrose_cpp",
 
     "build" : {
