@@ -37,6 +37,7 @@
         "Heimdall",
         "Artisan",
         "Prelude",
-        "ChessEngine"
+        "ChessEngine",
+        "Stash"
     ]
 }
