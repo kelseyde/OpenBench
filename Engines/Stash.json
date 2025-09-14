@@ -10,86 +10,70 @@
     "systems"   : ["Windows", "Linux"]
   },
 
-  "test_presets" : {
-
-    "default" : {
-      "base_branch"     : "master",
-      "book_name"       : "UHO_4060_v2.epd",
-      "test_bounds"     : "[0.00, 5.00]",
-      "test_confidence" : "[0.05, 0.05]",
-      "win_adj"         : "movecount=3 score=400",
-      "draw_adj"        : "movenumber=40 movecount=8 score=10"
+  "test_presets": {
+    "default": {
+      "base_branch": "main",
+      "book_name": "UHO_Lichess_4852_v1.epd",
+      "test_bounds": "[0.00, 5.00]",
+      "test_confidence": "[0.1, 0.05]",
+      "win_adj": "movecount=5 score=600",
+      "draw_adj": "movenumber=32 movecount=6 score=15"
     },
-
-    "STC" : {
-      "both_options"      : "Threads=1 Hash=16",
-      "both_time_control" : "8.0+0.08",
-      "workload_size"     : 32
+    "STC": {
+      "both_options": "Threads=1 Hash=128",
+      "both_time_control": "8.0+0.08",
+      "workload_size": 32
     },
-
-    "LTC" : {
-      "both_options"      : "Threads=1 Hash=64",
-      "both_time_control" : "40.0+0.4",
-      "workload_size"     : 8
+    "LTC": {
+      "both_options": "Threads=1 Hash=512",
+      "both_time_control": "40.0+0.4",
+      "workload_size": 8,
+      "test_bounds": "[0.50, 2.50]"
     },
-
-    "Nonreg STC" : {
-      "both_options"      : "Threads=1 Hash=16",
-      "both_time_control" : "8.0+0.08",
-      "workload_size"     : 32,
-      "test_bounds"       : "[-4.00, 1.00]"
+    "SMP STC": {
+      "both_options": "Threads=2 Hash=512",
+      "both_time_control": "8.0+0.08",
+      "workload_size": 64
     },
-
-    "Nonreg LTC" : {
-      "both_options"      : "Threads=1 Hash=64",
-      "both_time_control" : "40.0+0.4",
-      "workload_size"     : 8,
-      "test_bounds"       : "[-4.00, 1.00]"
+    "SMP LTC": {
+      "both_options": "Threads=2 Hash=1024",
+      "both_time_control": "40.0+0.4",
+      "workload_size": 16,
+      "test_bounds": "[0.50, 2.50]"
     },
-
-    "SMP STC" : {
-      "both_options"      : "Threads=8 Hash=64",
-      "both_time_control" : "5.0+0.05",
-      "workload_size"     : 64
+    "STC Simplification": {
+      "both_options": "Threads=1 Hash=128",
+      "both_time_control": "8.0+0.08",
+      "workload_size": 32,
+      "test_bounds": "[-1.75, 0.25]"
     },
-
-    "SMP LTC" : {
-      "both_options"      : "Threads=8 Hash=256",
-      "both_time_control" : "20.0+0.2",
-      "workload_size"     : 16
+    "LTC Simplification": {
+      "both_options": "Threads=1 Hash=512",
+      "both_time_control": "40.0+0.4",
+      "workload_size": 8,
+      "test_bounds": "[-1.75, 0.25]"
+    },
+    "STC Fixed Games": {
+      "both_options": "Threads=1 Hash=128",
+      "both_time_control": "8.0+0.08",
+      "workload_size": 32,
+      "test_max_games": 3000
+    },
+    "LTC Fixed Games": {
+      "both_options": "Threads=1 Hash=512",
+      "both_time_control": "40.0+0.4",
+      "workload_size": 8,
+      "test_max_games": 1000
     }
   },
-
-  "tune_presets" : {
-
-    "default" : {
-      "book_name" : "UHO_4060_v2.epd",
-      "win_adj"   : "movecount=3 score=400",
-      "draw_adj"  : "movenumber=40 movecount=8 score=10"
-    },
-
-    "STC" : {
-      "both_options"      : "Threads=1 Hash=16",
-      "both_time_control" : "8.0+0.08"
-    },
-
-    "LTC" : {
-      "both_options"      : "Threads=1 Hash=64",
-      "both_time_control" : "40.0+0.4"
+  "tune_presets": {
+    "default": {
+      "book_name": "UHO_Lichess_4852_v1.epd",
+      "win_adj": "movecount=5 score=600",
+      "draw_adj": "movenumber=32 movecount=6 score=15"
     }
   },
-
-  "datagen_presets" : {
-
-    "default" : {
-      "win_adj"       : "movecount=3 score=1410",
-      "draw_adj"      : "movenumber=40 movecount=8 score=15",
-      "workload_size" : 256
-    },
-
-    "16k Nodes" : {
-      "both_options"      : "Threads=1 Hash=1 NormalizeScore=false",
-      "both_time_control" : "N=16000"
-    }
+  "datagen_presets": {
+    "default": {}
   }
 }
