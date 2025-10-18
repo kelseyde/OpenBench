@@ -70,7 +70,6 @@
             "both_options"      : "Threads=1 Hash=8 UseSoftNodes=true",
             "both_time_control" : "N=5000",
             "datagen_max_games" : 1000000,
-            "genfens_args"      : "dfrc true",
             "book_name"         : "DFRC.epd",
             "upload_pgns"       : "COMPACT",
             "win_adj"           : "movecount=5 score=2000",
