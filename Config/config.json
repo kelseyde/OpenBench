@@ -38,6 +38,7 @@
         "Artisan",
         "Prelude",
         "ChessEngine",
-        "Stash"
+        "Stash",
+        "Lazarus"
     ]
 }
