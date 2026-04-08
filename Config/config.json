@@ -1,12 +1,16 @@
 {
-    "client_version"  : 32,
-    "client_repo_url" : "https://github.com/kelseyde/OpenBench",
-    "client_repo_ref" : "master",
+    "client_version"     : 45,
+    "client_repo_url"    : "https://github.com/AndyGrant/OpenBench",
+    "client_repo_ref"    : "master",
+
+    "fastchess_min_version" : "1.8.1",
+    "fastchess_repo_url"    : "https://github.com/AndyGrant/fastchess",
+    "fastchess_repo_ref"    : "master",
 
     "use_cross_approval"          : false,
     "require_login_to_view"       : false,
     "require_manual_registration" : false,
-    "balance_engine_throughputs"  : true,
+    "balance_engine_throughputs"  : false,
 
     "books" : [
         "2moves_v1.epd",
@@ -20,20 +24,29 @@
         "UHO_4060_v2.epd",
         "UHO_4060_vB.epd",
         "UHO_4060_vT.epd",
-        "UHO_Lichess_4852_v1.epd",
-        "DFRC_4852_v1.epd"
+        "UHO_Lichess_4852_v1.epd"
     ],
 
     "engines" : [
-        "Calvin",
-        "Serendipity",
-        "Hobbes",
-        "Dragonrose",
-        "weak",
-        "Tarnished",
-        "Cherry",
-        "Chaos",
-        "Laminar",
-        "Heimdall"
+        "4ku",
+        "Berserk",
+        "Bit-Genie",
+        "BlackMarlin",
+        "Demolito",
+        "Drofa",
+        "Equisetum",
+        "Ethereal",
+        "FabChess",
+        "Halogen",
+        "Igel",
+        "Koivisto",
+        "Laser",
+        "RubiChess",
+        "Seer",
+        "Stash",
+        "Stockfish",
+        "Weiss",
+        "Winter",
+        "Zahak"
     ]
 }
